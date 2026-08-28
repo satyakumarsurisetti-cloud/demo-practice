@@ -1,1 +1,1 @@
-print("Hello from GitHub Actions!")
+print("Hello from satyakumar home page!")
