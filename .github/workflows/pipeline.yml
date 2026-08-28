@@ -1,0 +1,16 @@
+name: Sample-CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run python
+        run: python hello.py
