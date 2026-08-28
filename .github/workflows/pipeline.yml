@@ -25,6 +25,9 @@ jobs:
     environment: prod
     
     steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        
       - name: Install dependencies
         run: |
              sudo apt update
