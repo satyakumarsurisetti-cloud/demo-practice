@@ -22,6 +22,7 @@ jobs:
     name: building application
     runs-on: ubuntu-latest
     needs: prebuild
+    environment: prod
     
     steps:
       - name: Install dependencies
