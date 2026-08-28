@@ -1,24 +1,22 @@
-name: Sample-CI
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+name: My CI
+
+on: push
 
 jobs:
-  hello:
+
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: setup python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - name: Build
+        run: echo "Building..."
 
-      - name: Run python
-        run: python hello.py
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test
+        run: echo "Testing..."
