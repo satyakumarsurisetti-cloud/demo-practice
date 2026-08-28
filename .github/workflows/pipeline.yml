@@ -31,6 +31,7 @@ jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
+    needs: checkout
 
     steps:
       - name: Checkout repository
@@ -50,6 +51,7 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: Checkout repository
@@ -69,6 +71,7 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: Checkout repository
@@ -88,6 +91,7 @@ jobs:
   deploy:
     name: Deploy Application
     runs-on: ubuntu-latest
+    needs: security
 
     steps:
       - name: Checkout repository
