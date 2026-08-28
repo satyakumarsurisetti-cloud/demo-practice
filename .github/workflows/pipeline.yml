@@ -1,107 +1,30 @@
-name: Demo CI Pipeline
-
+name: CI
 on:
   push:
     branches:
       - main
 
-  pull_request:
-    branches:
-      - main
-
 jobs:
-
-  # Job 1
-  checkout:
-    name: Checkout Code
+  prebuild:
+    name: setup required libraries
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: checkout repo
         uses: actions/checkout@v4
 
-      - name: Show files
-        run: ls -la
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-      - name: Show current directory
-        run: pwd
-
-
-  # Job 2
   build:
-    name: Build Application
+    name: building application
     runs-on: ubuntu-latest
-    needs: checkout
-
+    needs: prebuild
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Show Node version
-        run: node --version
-
       - name: Install dependencies
-        run: npm install
-
-      - name: Build application
-        run: npm run build
-
-
-  # Job 3
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run unit tests
-        run: npm test
-
-      - name: Generate test report
-        run: echo "Test report generated"
-
-
-  # Job 4
-  security:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run security audit
-        run: npm audit
-
-      - name: Security scan completed
-        run: echo "Security scan completed"
-
-
-  # Job 5
-  deploy:
-    name: Deploy Application
-    runs-on: ubuntu-latest
-    needs: security
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Prepare deployment
-        run: echo "Preparing deployment..."
-
-      - name: Deploy application
-        run: echo "Deploying application..."
-
-      - name: Deployment completed
-        run: echo "Application deployed successfully!"
+        run: |
+             sudo apt update \
+             sudo apt install python3 -y
