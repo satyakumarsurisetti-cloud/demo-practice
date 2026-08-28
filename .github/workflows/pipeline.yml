@@ -1,22 +1,103 @@
-name: My CI
+name: Demo CI Pipeline
 
-on: push
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
-  build:
+  # Job 1
+  checkout:
+    name: Checkout Code
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build
-        run: echo "Building..."
+      - name: Show files
+        run: ls -la
 
-  test:
+      - name: Show current directory
+        run: pwd
+
+
+  # Job 2
+  build:
+    name: Build Application
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test
-        run: echo "Testing..."
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show Node version
+        run: node --version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
+
+
+  # Job 3
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Generate test report
+        run: echo "Test report generated"
+
+
+  # Job 4
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run security audit
+        run: npm audit
+
+      - name: Security scan completed
+        run: echo "Security scan completed"
+
+
+  # Job 5
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare deployment
+        run: echo "Preparing deployment..."
+
+      - name: Deploy application
+        run: echo "Deploying application..."
+
+      - name: Deployment completed
+        run: echo "Application deployed successfully!"
